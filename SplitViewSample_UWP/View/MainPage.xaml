@@ -1,0 +1,87 @@
+﻿<Page x:Class="SplitViewSample_UWP.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:SplitViewSample_UWP"
+      xmlns:control="using:SplitViewSample_UWP.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="leadColorBrush"
+                         Color="#FF292929" />
+    </Page.Resources>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WidthVisualStateGroup">
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MainSplitView.DisplayMode"
+                                Value="Overlay" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="550" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="48" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <SplitView x:Name="MainSplitView"
+                   DisplayMode="CompactOverlay"
+                   PaneBackground="{x:Null}"
+                   Grid.ColumnSpan="2"
+                   Grid.RowSpan="2"
+                   OpenPaneLength="250">
+            <SplitView.Pane>
+                <Grid x:Name="SplitPane"
+                      Background="{StaticResource leadColorBrush}"
+                      Margin="0,48,0,0">
+                    <ListView x:Name="ItemsList"
+                              VerticalAlignment="Top"
+                              IsItemClickEnabled="True"
+                              ItemClick="ItemsList_ItemClick">
+                        <control:SplitViewPaneItemControl Glyph=""
+                                                          Text="Map" />
+                        <control:SplitViewPaneItemControl Glyph=""
+                                                          Text="Search" />
+                        <control:SplitViewPaneItemControl Glyph=""
+                                                          Text="Filters" />
+                    </ListView>
+                </Grid>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Grid>
+                    <Button HorizontalAlignment="Center"
+                            VerticalAlignment="Center">Content</Button>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+        <Button x:Name="ToggleSplitViewButton"
+                Click="ToggleSplitViewButton_Click"
+                Background="{StaticResource leadColorBrush}"
+                Foreground="White"
+                FontFamily="Segoe MDL2 Assets"
+                Content=""
+                Height="48"
+                Width="48"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" />
+    </Grid>
+</Page>
